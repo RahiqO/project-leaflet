@@ -64,7 +64,7 @@ function getEarthquakcoords(featurecoords) {
 
     for (let index = 0; index < magnitude.length; index++) {
       let magnitude = magnitude[index];
-    }
+    }}
 
 // function getRadius(magnitude) {
 //   // Define radius logic based on magnitude ranges
