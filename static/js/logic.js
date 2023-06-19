@@ -2,7 +2,7 @@
   let streetmap =   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   });
-
+// We create the map object with options.
   let baseMaps = {
     "Street Map": streetmap
   };
@@ -10,13 +10,12 @@
     "Earth quake location": earthquake
     };
 
-
-    let Mymap = L.Mymap("map", {
+  let Mymap = L.Mymap("map", {
       center: [37.09024, -95.712891],
       zoom: 4,
       layers: [streetmap, earthquake]
     });
-    L.control.layers(baseMaps, overlayMaps, {
+  L.control.layers(baseMaps, overlayMaps, {
       collapsed: false
     }).addTo(map);
   }
