@@ -28,6 +28,6 @@ let myMap = L.map("map", {
         }
     
       }
-    
+    myMap.addLayer(markers);
   })  
 
