@@ -1,13 +1,14 @@
 // We create the tile layer that will be the background of our map
-  let basemapLayer =   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  let tilelayer =   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   });
 
   let Mymap = L.map("map", {
       center: [37.09024, -95.712891],
       zoom: 4,
-      layers: [basemapLayer]
+      layers: [tilelayer]
   });
+
 
     // basemapLayer.addTo(map);
 
@@ -45,15 +46,15 @@ url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
 
 d3.json(url).then(function(response) {
   let depth = [];
-  let location = features[i].geometry;
-  for (let i = 0; i < features.length; i++) {
-    stateMarkers.push(
+  let locations = features[i].geometry;
+  for (var i = 0; i < location.length; i++) {
+      depth.push(
       L.circle(locations[i].coordinates[3], {
         stroke: false,
         fillOpacity: 0.75,
         color: "white",
         fillColor: "white",
-        radius: markerSize(locations[i].state.population)
+        radius: markerSize(locations[i].coordinates[3])
       })
     )
   }
