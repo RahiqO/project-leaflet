@@ -48,7 +48,7 @@
       
         return style;
       }
-      
+  // This function determines the color of the marker based on the magnitude of the earthquake.      
 function getColor(magnitude) {
     // Define color logic based on magnitude ranges
   if (magnitude < 4) {
@@ -61,10 +61,44 @@ function getColor(magnitude) {
 function getEarthquakcoords(featurecoords) {
 
   // Extract the magnitude value from the propertie
+  let latlng = feature.geometry.coordinates;
 
-    for (let index = 0; index < magnitude.length; index++) {
-      let magnitude = magnitude[index];
-    }}
+    for (let index = 0; index < latlng.length; index++) {
+      let latlng = latlng[index];
+      var coords = L.latLng(coordinates[i][0], coordinates[i][1]);
+      var circleMarker = L.circleMarker(coords, styleInfo());
+      circleMarker.addTo(map);
+
+}}
+var circleMarker = L.circleMarker(featurecoords, {
+  radius: getRadius(magnitude),
+  fillColor: getColor(magnitude),
+  color: '#ffffff',
+  weight: 1,
+  opacity: 1,
+  fillOpacity: 0.7
+});
+
+circleMarker.bindPopup('Magnitude: ' + feature.geometry.coordinates[3] + '<br>Location: ' + feature.geometry.coordinates[0][1]);
+circleMarker.addTo(map);
+
+var legend = L.control({ position: "bottomleft" });
+
+legend.onAdd = function(map) {
+  var div = L.DomUtil.create("div", "legend");
+  div.innerHTML += "<h4>Tegnforklaring</h4>";
+  div.innerHTML += '<i style="background: #477AC2"></i><span>Water</span><br>';
+  div.innerHTML += '<i style="background: #448D40"></i><span>Forest</span><br>';
+  div.innerHTML += '<i style="background: #E6E696"></i><span>Land</span><br>';
+  div.innerHTML += '<i style="background: #E8E6E0"></i><span>Residential</span><br>';
+  div.innerHTML += '<i style="background: #FFFFFF"></i><span>Ice</span><br>';
+  div.innerHTML += '<i class="icon" style="background-image: url(https://d30y9cdsu7xlg0.cloudfront.net/png/194515-200.png);background-repeat: no-repeat;"></i><span>Grænse</span><br>';
+  
+  return div;
+};
+
+legend.addTo(map);
+
 
 // function getRadius(magnitude) {
 //   // Define radius logic based on magnitude ranges
