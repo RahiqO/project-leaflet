@@ -23,19 +23,29 @@ function markerSize(magnitude){
 
 }
 
-
-
-
-function circlemarker(data){
-  return {
+function circlemarker(data) {
+  var marker = L.circleMarker(data.latlng, {
     stroke: false,
     fillOpacity: 0.75,
     color: "green",
-    fillColor: "pink",
+    fillColor: "green",
     radius: markerSize(data.alt)
-  } 
+  });
 
+  marker.bindPopup("Magnitude: " + data.alt + "<br>Location: " + data.latlng);
+
+  return marker;
 }
+// function circlemarker(data){
+//   return {
+//     stroke: false,
+//     fillOpacity: 0.75,
+//     color: "green",
+//     fillColor: "pink",
+//     radius: markerSize(data.alt)
+//   } 
+
+// }
 d3.json(url).then(function(response) {
   let features = response.features;
   // console.log(features)
@@ -46,6 +56,8 @@ d3.json(url).then(function(response) {
     },
     style: circlemarker
 
-}).addTo(Mymap);
+})   
+
+.addTo(Mymap);
 })
  
