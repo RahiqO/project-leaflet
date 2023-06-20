@@ -2,102 +2,138 @@
   let basemapLayer =   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   });
-// We create the map object with options.
-  let baseMaps = {
-    "Street Map": basemapLayer
-  };
-  // let overlayMaps = {
-  //   "Earth quake location": earthquake
-  //   };
 
   let Mymap = L.map("map", {
       center: [37.09024, -95.712891],
       zoom: 4,
       layers: [basemapLayer]
-    });
+  });
 
     // basemapLayer.addTo(map);
 
-    fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson')
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(data) { console.log(data)
-    });
+    url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson'
+    // .then(function(response) {
+    //   return response.json();
+    // })
+    // .then(function(data) { console.log(data)
+    // });
 
-  function getEarthquakeStyle(feature) {
-  // Extract the magnitude value from the properties
-    let magnitude = feature.geometry.coordinates[3];
-    var color = getColor(magnitude);
-    var radius = getRadius(magnitude);
+    d3.json(url).then(function(response) {
 
-    let earthmarkers = [];
-
-    for (let index = 0; index < magnitude.length; index++) {
-        let magnitude = magnitude[index];
+      console.log(response);
+      features = response.features;
     
+      // console.log(features);
+    
+      for (let i = 0; i < features.length; i++) {
+    
+        let location = features[i].geometry;
+        if(location){
+          L.circle([location.coordinates[0], location.coordinates[1]]).addTo(Mymap);
+        }
       
-        var style = {
-          radius: radius(magnitude),
-          fillColor: color(magnitude),
-          color: '#ffffff',
-          weight: 1,
-          opacity: 1,
-          fillOpacity: 0.7
-        };
-      
-        return style;
       }
-  // This function determines the color of the marker based on the magnitude of the earthquake.      
-function getColor(magnitude) {
-    // Define color logic based on magnitude ranges
-  if (magnitude < 4) {
-  return '#ff0000'; // Red for low magnitudes
-  } else {
-    return '#00ff00'; // Green for high magnitudes
-  }
-}}
-
-function getEarthquakcoords(featurecoords) {
-
-  // Extract the magnitude value from the propertie
-  let latlng = feature.geometry.coordinates;
-
-    for (let index = 0; index < latlng.length; index++) {
-      let latlng = latlng[index];
-      var coords = L.latLng(coordinates[i][0], coordinates[i][1]);
-      var circleMarker = L.circleMarker(coords, styleInfo());
-      circleMarker.addTo(map);
-
-}}
-var circleMarker = L.circleMarker(featurecoords, {
-  radius: getRadius(magnitude),
-  fillColor: getColor(magnitude),
-  color: '#ffffff',
-  weight: 1,
-  opacity: 1,
-  fillOpacity: 0.7
+    
 });
 
-circleMarker.bindPopup('Magnitude: ' + feature.geometry.coordinates[3] + '<br>Location: ' + feature.geometry.coordinates[0][1]);
-circleMarker.addTo(map);
+url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson'
+// .then(function(response) {
+//   return response.json();
+// })
+// .then(function(data) { console.log(data)
+// });
 
-var legend = L.control({ position: "bottomleft" });
+d3.json(url).then(function(response) {
+  let depth = [];
+  let location = features[i].geometry;
+  for (let i = 0; i < features.length; i++) {
+    stateMarkers.push(
+      L.circle(locations[i].coordinates[3], {
+        stroke: false,
+        fillOpacity: 0.75,
+        color: "white",
+        fillColor: "white",
+        radius: markerSize(locations[i].state.population)
+      })
+    )
+  }
+});
 
-legend.onAdd = function(map) {
-  var div = L.DomUtil.create("div", "legend");
-  div.innerHTML += "<h4>Tegnforklaring</h4>";
-  div.innerHTML += '<i style="background: #477AC2"></i><span>Water</span><br>';
-  div.innerHTML += '<i style="background: #448D40"></i><span>Forest</span><br>';
-  div.innerHTML += '<i style="background: #E6E696"></i><span>Land</span><br>';
-  div.innerHTML += '<i style="background: #E8E6E0"></i><span>Residential</span><br>';
-  div.innerHTML += '<i style="background: #FFFFFF"></i><span>Ice</span><br>';
-  div.innerHTML += '<i class="icon" style="background-image: url(https://d30y9cdsu7xlg0.cloudfront.net/png/194515-200.png);background-repeat: no-repeat;"></i><span>Grænse</span><br>';
+
+    
+//     getEarthquakeStyle(feature) {
+//   // Extract the magnitude value from the properties
+//     let magnitude = feature.geometry.coordinates[3];
+//     var color = getColor(magnitude);
+//     var radius = getRadius(magnitude);
+
+//     let earthmarkers = [];
+
+//     for (let index = 0; index < magnitude.length; index++) {
+//         let magnitude = magnitude[index];
+    
+      
+//         var style = {
+//           radius: radius(magnitude),
+//           fillColor: color(magnitude),
+//           color: '#ffffff',
+//           weight: 1,
+//           opacity: 1,
+//           fillOpacity: 0.7
+//         };
+      
+//         return style;
+//       }
+//   // This function determines the color of the marker based on the magnitude of the earthquake.      
+// function getColor(magnitude) {
+//     // Define color logic based on magnitude ranges
+//   if (magnitude < 4) {
+//   return '#ff0000'; // Red for low magnitudes
+//   } else {
+//     return '#00ff00'; // Green for high magnitudes
+//   }
+// }}
+
+// function getEarthquakcoords(featurecoords) {
+
+//   // Extract the magnitude value from the propertie
+//   let latlng = feature.geometry.coordinates;
+
+//     for (let index = 0; index < latlng.length; index++) {
+//       let latlng = latlng[index];
+//       var coords = L.latLng(coordinates[i][0], coordinates[i][1]);
+//       var circleMarker = L.circleMarker(coords, styleInfo());
+//       circleMarker.addTo(map);
+
+// }}
+// var circleMarker = L.circleMarker(featurecoords, {
+//   radius: getRadius(magnitude),
+//   fillColor: getColor(magnitude),
+//   color: '#ffffff',
+//   weight: 1,
+//   opacity: 1,
+//   fillOpacity: 0.7
+// });
+
+// circleMarker.bindPopup('Magnitude: ' + feature.geometry.coordinates[3] + '<br>Location: ' + feature.geometry.coordinates[0][1]);
+// circleMarker.addTo(map);
+
+// var legend = L.control({ position: "bottomleft" });
+
+// legend.onAdd = function(map) {
+//   var div = L.DomUtil.create("div", "legend");
+//   div.innerHTML += "<h4>Tegnforklaring</h4>";
+//   div.innerHTML += '<i style="background: #477AC2"></i><span>Water</span><br>';
+//   div.innerHTML += '<i style="background: #448D40"></i><span>Forest</span><br>';
+//   div.innerHTML += '<i style="background: #E6E696"></i><span>Land</span><br>';
+//   div.innerHTML += '<i style="background: #E8E6E0"></i><span>Residential</span><br>';
+//   div.innerHTML += '<i style="background: #FFFFFF"></i><span>Ice</span><br>';
+//   div.innerHTML += '<i class="icon" style="background-image: url(https://d30y9cdsu7xlg0.cloudfront.net/png/194515-200.png);background-repeat: no-repeat;"></i><span>Grænse</span><br>';
   
-  return div;
-};
+//   return div;
+// };
 
-legend.addTo(map);
+// legend.addTo(map);
 
 
 // function getRadius(magnitude) {
