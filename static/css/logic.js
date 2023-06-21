@@ -38,17 +38,38 @@ function circlemarker(data) {
 
 d3.json(url).then(function(response) {
   let features = response.features;
-  console.log(features)
-  L.geoJson(response, {
-    pointToLayer: function( feature, latlng) {
-      // console.log(latlng)
-      console.log(feature.geometry.coordinates[3])
-    return L.circleMarker(latlng)
-    },
-    style: circlemarker    
-})
+  // console.log(features);
 
-})
-onEachFeature: function( feature, layer ){
-  layer.bindPopup (feature.properties.coordinates[0][1], {  maxWidth: "auto"})};.addTo(Mymap);   
+  L.geoJson(response, {
+    pointToLayer: function(feature, latlng) {
+      // console.log(feature.geometry.coordinates[3]);
+      return L.circleMarker(latlng);
+    },
+    style: circlemarker,
+    onEachFeature: function(feature, layer) {
+      layer.bindPopup(feature.properties.coordinates[0][1], { maxWidth: "auto" });
+    }
+  }).addTo(Mymap);
+});
+
+
+
+
+
+// d3.json(url).then(function(response) {
+//   let features = response.features;
+//   console.log(features)
+//   L.geoJson(response, {
+//     pointToLayer: function( feature, latlng) {
+//       // console.log(latlng)
+//       console.log(feature)
+//     return L.circleMarker(latlng)
+//     },
+//     style: circlemarker    
+// })
+
+// })
+// onEachFeature: function( feature, layer ){
+//   layer.bindPopup (feature.properties.coordinates[0][1], {  maxWidth: "auto"})}
+//   .addTo(Mymap);   
  
