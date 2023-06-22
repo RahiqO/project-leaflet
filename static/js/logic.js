@@ -49,10 +49,10 @@ d3.json(url).then(function(response) {
     onEachFeature: function(feature, layer) {
       layer.bindPopup('Magnitude: ' + feature.geometry.coordinates[2] + '<br>Location: ' + feature.properties.place);
     }
-    
+ 
   }).addTo(Mymap);
   let legend = L.control({ position: "bottomright" });
-  legend.onAdd = function (map) {
+  legend.onAdd = function () {
     let div = L.DomUtil.create("div", "legend");
     let colors = [
       "#00FF00",
@@ -80,5 +80,5 @@ d3.json(url).then(function(response) {
     }
     return div;
   };
-  legend.addTo(myMap);
+  legend.addTo(Mymap);
 })
