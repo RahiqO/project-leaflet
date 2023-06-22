@@ -42,15 +42,15 @@ d3.json(url).then(function(response) {
 
   L.geoJson(response, {
     pointToLayer: function(feature, latlng) {
-      // console.log(feature.geometry.coordinates[3]);
+     
       return L.circleMarker(latlng);
     },
     style: circlemarker,
     onEachFeature: function(feature, layer) {
-      layer.bindPopup(feature.properties.coordinates[0][1], { maxWidth: "auto" });
+      layer.bindPopup(feature.geometry.coordinates[0], { maxWidth: "auto" });
     }
-  }).addTo(Mymap);
-});
+  })
+}).addTo(Mymap);
 
 
 
