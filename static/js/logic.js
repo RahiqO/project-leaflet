@@ -49,5 +49,36 @@ d3.json(url).then(function(response) {
     onEachFeature: function(feature, layer) {
       layer.bindPopup('Magnitude: ' + feature.geometry.coordinates[2] + '<br>Location: ' + feature.properties.place);
     }
+    
   }).addTo(Mymap);
+  let legend = L.control({ position: "bottomright" });
+  legend.onAdd = function (map) {
+    let div = L.DomUtil.create("div", "legend");
+    let colors = [
+      "#00FF00",
+      "#7FFF00",
+      "#FFFF00",
+      "#FF7F00",
+      "#FF0000",
+      "#8B0000",
+    ];
+    let labels = [
+      "0-10 km",
+      "10-30 km",
+      "30-50 km",
+      "50-70 km",
+      "70-90 km",
+      "90+ km",
+    ];
+    for (let i = 0; i < colors.length; i++) {
+      div.innerHTML +=
+        '<i style="background:' +
+        colors[i] +
+        '"></i> ' +
+        labels[i] +
+        "<br>";
+    }
+    return div;
+  };
+  legend.addTo(myMap);
 })
