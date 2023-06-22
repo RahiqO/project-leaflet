@@ -38,7 +38,7 @@ function circlemarker(data) {
 
 d3.json(url).then(function(response) {
   let features = response.features;
-  // console.log(features);
+    console.log(features);
 
   L.geoJson(response, {
     pointToLayer: function(feature, latlng) {
@@ -47,10 +47,10 @@ d3.json(url).then(function(response) {
     },
     style: circlemarker,
     onEachFeature: function(feature, layer) {
-      layer.bindPopup(feature.geometry.coordinates[0], { maxWidth: "auto" });
+      layer.bindPopup("hi");
     }
-  })
-}).addTo(Mymap);
+  }).addTo(Mymap);
+})
 
 
 
